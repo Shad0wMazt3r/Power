@@ -109,7 +109,6 @@ def checkFeeling(user_input):
                     print("Your name has changed")
 
     elif "song" in user_input_split:
-        if "listen" in user_input_split:
             print(f"Power:\n>Playing you a song right away!\n")
             song_list = ['https://www.youtube.com/watch?v=xo1VInw-SKc','https://www.youtube.com/watch?v=bMpFmHSgC4Q','https://www.youtube.com/watch?v=Dkk9gvTmCXY','https://www.youtube.com/watch?v=6BYIKEH0RCQ','https://www.youtube.com/watch?v=v2-9rIL_f4w','https://www.youtube.com/watch?v=zaCbuB3w0kg','https://www.youtube.com/watch?v=7tNPxY_ntEA']
             random_song_no = random.randint(0,6)
