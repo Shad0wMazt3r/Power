@@ -3,7 +3,45 @@ import os
 import time
 import re
 from random_word import RandomWords
+import datetime
+log = open("log.txt", "a+")
+log.write("----------------------Session Started----------------------\n")
+# Easter Eggs
 
+halloween_poster =  '''                                                                                                                                                                                   
+                         ooo$$$$$$$$$$$$oooo                                                                                                                                               
+                       oo$$$$$$$$$$$$$$$$$$$$$$$$o                                                                                                                                         
+                    oo$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$o                                                                                                                                      
+                  o$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$o                                                                                                                                   
+                o$$$$$$          $$$$$$$          $$$$$$o                                                                                                                                  
+               o$$$$$$$$        $$$$$$$$$        $$$$$$$$$o                                                                                                                                
+              $$$$$$$$$$$      $$$$$$$$$$$      $$$$$$$$$$$$                                                                                                                               
+            $$$$$$$$$$$$$$    $$$$$$ $$$$$$    $$$$$$$$$$$$$$                                                                                                                              
+           o$$$$$$$$$$$$$$$ $$$$$$$   $$$$$$$ $$$$$$$$$$$$$$$                                                                                                                              
+           o$$$$$$$$$$$$$$$$$$$$$$     $$$$$$$$$$$$$$$$$$$$$$$                                                                                                                             
+           $$$$$$$$$$$$$$$$$$$$$$       $$$$$$$$$$$$$$$$$$$$$$                                                                                                                             
+           $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" "$$$                                                                                                                             
+            $$$$$  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   o$$                                                                                                                              
+             $$$$    $$$$  ""$$$$$$$$$$$$$$$$$""  $$$$   o$$$                                                                                                                               
+              "$$$$o         $$$$  $$$$$   $$$          o$$$                                                                                                                                
+                 $$$$o   .     ""  """""   ""       .  $$$"                                                                                                                                 
+                  "$$$$o $$$oo                   oo$$o$$$                                                                                                                                   
+                    "$$$$$$$$$    o$$$$   $$$$   $$$$$""                                                                                                                                    
+                       ""$$$$$$ooo$$$$$ooo$$$$$$$$$""                                                                                                                                       
+                         ""$$$$$$$$$$$$$$$$$$$$                                                                                                                                            
+                                 """$$$$"""                                                                                                                                                
+
+
+   _   _                           _   _       _ _                              
+  | | | | __ _ _ __  _ __  _   _  | | | | __ _| | | _____      _____  ___ _ __  
+  | |_| |/ _` | '_ \| '_ \| | | | | |_| |/ _` | | |/ _ \ \ /\ / / _ \/ _ \ '_ \ 
+  |  _  | (_| | |_) | |_) | |_| | |  _  | (_| | | | (_) \ V  V /  __/  __/ | | |
+  |_| |_|\__,_| .__/| .__/ \__, | |_| |_|\__,_|_|_|\___/ \_/\_/ \___|\___|_| |_|
+              |_|   |_|    |___/                  
+
+
+  '''     
+print(halloween_poster)
 def setup():
     os.system("mkdir power_files")
     os.chdir("power_files")
@@ -18,9 +56,10 @@ def setup():
     os.system("mkdir sad_stories")
     os.system(age_setup)
     os.chdir("../..")
-    print('''The set up has been completed but you may need to install the following packages:
-        1. mpv (sudo apt install mpv)''')
-
+    print('''
+    The set up has been completed but you may need to install the following packages:
+        1. vlc (sudo apt install vlc or download it from the website)''')
+    log.write(f"Age: {age}")
 def getName():
     os.chdir("power_files/data")
     with open('name','r') as name_file:
@@ -41,7 +80,7 @@ def checkFeeling(user_input):
             user_input_split = user_input.split(" ")
             if  any(x in user_input_split for x in negation_words):
                 print("Okay, But I am here for you. I will be available to listen to you anytime you wish!")
-            if any(x in user_input_split for x in affirmation_words):
+            elif any(x in user_input_split for x in affirmation_words):
                 print("Power:\n>I am here for you. Tell me whatever you want and I wont tell anyone")
                 sad_story = input(f"{name}:\n>")
                 random_name = RandomWords()
@@ -54,13 +93,9 @@ def checkFeeling(user_input):
                 sad_story_file.close()
                 os.chdir("../../../")
                 print(f"Power:\n>I have noted down your story, {name}! I remember it as {sad_story_name}")
-        elif any(x in user_input_split for x in positive_feelings):
-            print("I am glad you feel that way! Would you like to tell me why you feel that way?")
-            name = getName()
-            user_input = input(f"\n{name}:\n>")
-            user_input_split = user_input.split(" ")
-            if  any(x in user_input_split for x in negation_words):
-                print("Okay, Keep up the positive emotions!")
+            else:
+                engine.say("I didnt understand that, I am assuming that you dont want to tell me the story, but I am here for you, I will listen to you anytime you wish")
+                print("Power:\n>I didnt understand that, I am assuming that you dont want to tell me the story, but I am here for you, I will listen to you anytime you wish")
             if any(x in user_input_split for x in affirmation_words):
                 print("Power: \n>I am excited to hear your story!")
                 happy_story = input(f"{name}: \n>")
@@ -109,12 +144,28 @@ def checkFeeling(user_input):
                     print("Your name has changed")
 
     elif "song" in user_input_split:
-            print(f"Power:\n>Playing you a song right away!\n")
+            print(f"Playing you a song right away!\n")
             song_list = ['https://www.youtube.com/watch?v=xo1VInw-SKc','https://www.youtube.com/watch?v=bMpFmHSgC4Q','https://www.youtube.com/watch?v=Dkk9gvTmCXY','https://www.youtube.com/watch?v=6BYIKEH0RCQ','https://www.youtube.com/watch?v=v2-9rIL_f4w','https://www.youtube.com/watch?v=zaCbuB3w0kg','https://www.youtube.com/watch?v=7tNPxY_ntEA']
             random_song_no = random.randint(0,6)
             random_song_link = song_list[random_song_no]
-            play_random_song = 'mpv '+random_song_link
+            play_random_song = 'vlc '+random_song_link
             os.system(play_random_song)
+    elif user_input == "what is your name?":
+        print("My name is Power and I am here to help you!")
+    elif user_input == "how are you?":
+        print("I am fine, Thank you. How was your day today?")
+    elif "bye" in user_input_split:
+        log.write("-------------------Session ended-----------------")
+        log.close()
+        print("Bye!")
+        exit()
+    else:
+        log.write(user_input)
+        log.write("\n")
+        random_number_not_understood = random.randint(0,3)
+        random_not_understood = not_understood[random_number_not_understood]
+        print(random_not_understood)
+        print("If this was a genuine issue of bot not understanding what you are trying to say, please send the log.txt to the Power's Github (https://github.com/Shad0wMazt3r/Power")
 def getResponse(user_input):
     user_input = user_input.lower()
     user_input_split = user_input.split(" ")
@@ -147,6 +198,7 @@ name = getName()
 
 print("Power:")
 print(">"+random_first_greeting, name+", "+random_greeting)
+
 print("I am Power, I am your friend!, Do not hesitate to talk to me.")
 
 first_greeting = ["hi","hello", "hey","hola", "konnichiwa", "namaste"]
@@ -159,8 +211,17 @@ negation_words = ['no', 'nah', 'not', 'nay','nope', 'none', 'nobody', 'nothing',
 
 affirmation_words = ['yes',"ya", 'yeah', 'yup', 'ok','alright', "all right", "sure", "certainly", "absolutely", "indeed","aye", "of course", "ofcourse", "ofc","yep", "yah","okay","surely", "yea"]
 
-while True:
-    user_input = input(f"\n{name}:\n>")
-    print("\nPower:\n>", end='')
-    getResponse(user_input)
+not_understood = ['I didnt quite get that','Pardon?', "I am really sorry, I couldn't catch that","I didn't understand you"]
 
+while True:
+    try:
+        user_input = input(f"\n{name}:\n>")
+        print("\nPower:\n>", end='')
+        getResponse(user_input)
+        random_integer_post_log = random.randint(0,3)
+        if random_integer_post_log == 0:
+            print("Please consider uploading log.txt to https://power-log.herokuapp.com")
+    except KeyboardInterrupt:
+        log.write("-------------------Session ended-----------------\n")
+        log.close()
+        exit()
